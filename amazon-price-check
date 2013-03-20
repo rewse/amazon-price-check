@@ -130,6 +130,7 @@ def req_product(opener, asin):
 
 def get_price(res):
   pat = re.compile(r'<span id="actualPriceValue">.+ ([0-9,]+)')
+  price = "-----"
 
   for match in pat.finditer(res):
     price = match.group(1).replace(",", "")
