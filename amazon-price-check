@@ -106,9 +106,9 @@ def valid_opt(argv):
   return Option(opts, args)
 
 # }}}
-# {{{ buid_opener()
+# {{{ build_opener()
 
-def buid_opener():
+def build_opener():
   opener = urllib2.build_opener()
   opener.addheaders = [('User-Agent', USER_AGENT)]
 
@@ -155,7 +155,7 @@ def get_price(res):
 def main():
   opt = valid_opt(sys.argv)
 
-  opener = buid_opener()
+  opener = build_opener()
 
   res = req_product(opener, opt.asin)
   print get_price(res)
