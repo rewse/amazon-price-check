@@ -130,13 +130,24 @@ def req_product(opener, asin):
 # {{{ get_price()
 
 def get_price(res):
-  pat = re.compile(r'<span id="actualPriceValue">.+ ([0-9,]+)')
-  price = "-----"
+  item_pat = re.compile(r'<span id="actualPriceValue">.+ ([0-9,]+)')
+  shipping_pat = re.compile(r'<span id="pricePlusShippingQty">.+<span class="plusShippingText">.+ ([0-9,]+)')
+  item = 0
+  shipping = 0
 
-  for match in pat.finditer(res):
-    price = match.group(1).replace(",", "")
+  for match in item_pat.finditer(res):
+    item = int(match.group(1).replace(",", ""))
 
-  return price
+  for match in shipping_pat.finditer(res):
+    shipping = int(match.group(1).replace(",", ""))
+
+  if shipping != 0:
+    item += shipping
+
+  if item == 0:
+    item = "-----"
+
+  return item
 
 # }}}
 # {{{ main()
